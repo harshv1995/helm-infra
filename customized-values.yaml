@@ -45,7 +45,7 @@ env:
     value: batmantest
   # All non sensitive secrets can be passed here
   - name: VERSION
-    value: notSoLatest        
+    value: itsLatest        
 
 securityContext: {}
 
