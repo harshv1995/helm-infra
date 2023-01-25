@@ -13,7 +13,7 @@ image:
 imagePullSecrets:
 - name: mysecret
 
-nameOverride: ""
+nameOverride: "batman-poc"
 fullnameOverride: ""
 
 serviceAccount:
