@@ -28,29 +28,26 @@ serviceAccount:
 podAnnotations: {}
 
 podSecurityContext: {}
-  # fsGroup: 2000
 
 env:
   - name: AWS_ACCESS_KEY
     valueFrom:
       secretKeyRef:
         name: mysecret
-        key: USER_NAME
+        key: AWS_ACCESS_KEY
   - name: AWS_SECRET_KEY
     valueFrom:
       secretKeyRef:
         name: mysecret
-        key: PASSWORD
+        key: AWS_SECRET_KEY
+  # AWS secret manager ID
+  - name: AWS_SECRET_MANAGER_ID
+    value: batmantest
+  # All non sensitive secrets can be passed here
   - name: VERSION
     value: notSoLatest        
 
 securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
 
 service:
   type: ClusterIP

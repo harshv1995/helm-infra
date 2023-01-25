@@ -27,6 +27,25 @@ spec:
       serviceAccountName: {{ include "helm-infra.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      ######## Temp  ########
+      initContainers:
+      - name: aws-secret-fetcher
+        image: amazon/aws-cli
+        command:
+        - sh
+        - -c
+        - |
+          aws configure set aws_access_key_id $AWS_ACCESS_KEY
+          aws configure set aws_secret_access_key $AWS_SECRET_KEY
+          aws configure set default.region us-east-1
+          mkdir -p /config/
+          aws secretsmanager get-secret-value --secret-id $AWS_SECRET_MANAGER_ID --query SecretString --output text > /config/config.json    
+        env:
+          {{- toYaml .Values.env | nindent 12 }}
+        volumeMounts:
+        - name: config-volume
+          mountPath: /config        
+      #######################        
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -39,6 +58,9 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
+          volumeMounts:
+          - name: config-volume
+            mountPath: /config
           livenessProbe:
             httpGet:
               path: /
@@ -49,6 +71,9 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+      - name: config-volume
+        emptyDir: {}      
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
