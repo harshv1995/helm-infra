@@ -18,7 +18,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "squadcast-helm.selectorLabels" . | nindent 8 }}
+        run: {{ include "squadcast-helm.fullname" . }} # FIXME: uncomment it {{- include "squadcast-helm.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
