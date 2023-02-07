@@ -43,6 +43,8 @@ env:
   # AWS secret manager ID
   - name: AWS_SECRET_MANAGER_ID
     value: batmantest
+  - name: AWS_SECRET_VERSION_ID
+    value: latest    
   # All non sensitive secrets can be passed here
   - name: VERSION
     value: itsLatest        
