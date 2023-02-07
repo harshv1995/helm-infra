@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ include "squadcast-helm.fullname" . }}
   labels:
-    {{- include "squadcast-helm.labels" . | nindent 4 }} FIXME: Uncomment it
+    {{- include "squadcast-helm.labels" . | nindent 4 }}
     # run: {{ include "squadcast-helm.fullname" . }} # FIXME: uncomment it {{- include "squadcast-helm.selectorLabels" . | nindent 8 }}    
 spec:
   type: {{ .Values.service.type }}

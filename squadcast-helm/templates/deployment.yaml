@@ -8,10 +8,10 @@ spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
-  # selector:
-  #   matchLabels:
-  #     run: {{ include "squadcast-helm.fullname" . }} 
-      # {{- include "squadcast-helm.selectorLabels" . | nindent 6 }}  #FIXME: Uncomment this
+  selector:
+    matchLabels:
+      # run: {{ include "squadcast-helm.fullname" . }} 
+      {{- include "squadcast-helm.selectorLabels" . | nindent 6 }}  #FIXME: Uncomment this
   template:
     metadata:
       {{- with .Values.podAnnotations }}
