@@ -13,4 +13,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "squadcast-helm.selectorLabels" . | nindent 4 }}
+    run: {{ include "squadcast-helm.fullname" . }} # FIXME: uncomment it {{- include "squadcast-helm.selectorLabels" . | nindent 4 }}
