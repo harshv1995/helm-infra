@@ -20,6 +20,6 @@ entries:
     name: squadcast-helm
     type: application
     urls:
-    - https://github.com/SquadcastHub/helm-infra/squadcast-helm-0.1.0.tgz
+    - https://squadcasthub.github.io/helm-infra/squadcast-helm-0.1.0.tgz
     version: 0.1.0
 generated: "2023-02-07T07:39:46.440465+05:30"
