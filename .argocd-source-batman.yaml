@@ -1,7 +1,7 @@
 helm:
   parameters:
   - name: image.tag
-    value: 50880e8a
+    value: faa57fde
     forcestring: true
   - name: image.name
     value: gcr.io/sq-stage-94587/batman
