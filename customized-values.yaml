@@ -6,15 +6,15 @@ replicaCount: 1
 
 image:
   repository: gcr.io/sq-stage-94587/batman
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
 imagePullSecrets:
 - name: mysecret
 
-nameOverride: "batman-poc"
-fullnameOverride: ""
+nameOverride: ""
+fullnameOverride: "batman"
 
 serviceAccount:
   # Specifies whether a service account should be created
