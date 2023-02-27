@@ -76,6 +76,9 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
+initContainers:
+  enabled: false
+
 livenessProbe:
   enabled: false
 readinessProbe:

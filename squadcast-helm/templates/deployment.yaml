@@ -38,7 +38,7 @@ spec:
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
-              protocol: TCP
+              protocol: TC
           {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
@@ -66,6 +66,10 @@ spec:
             name: config-volume
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      {{- if .Values.initContainers.enabled }}
+
+      {{- end -}}
+      {{- if .Values.initContainers.enabled}}
       initContainers:
         - name: aws-secret-fetcher
           image: amazon/aws-cli
