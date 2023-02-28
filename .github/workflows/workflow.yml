@@ -16,9 +16,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        # use squadcast-helm as the charts directory
         with:
-          path: squadcast-helm
           fetch-depth: 0
 
       - name: Configure Git
@@ -31,9 +29,9 @@ jobs:
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.5.0
-        with:
-          charts_dir: /squadcast-helm
-          charts-repo-url: https://squadcasthub.github.io/helm-infra/squadcast-helm
-          config: cr.yaml
+        # with:
+        #   charts_dir: /squadcast-helm
+        #   charts-repo-url: https://squadcasthub.github.io/helm-infra/squadcast-helm
+        #   config: cr.yaml
         env:
           CR_TOKEN: "${{ secrets.CR_TOKEN }}"
