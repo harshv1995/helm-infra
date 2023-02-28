@@ -1,4 +1,5 @@
-owner: SquadcastHub
-git-repo: helm-infra
-pages-branch: master
-charts-dir: squadcast-helm
+# owner: SquadcastHub
+# git-repo: helm-infra
+# pages-branch: master
+# charts-dir: squadcast-helm
+sign: false
