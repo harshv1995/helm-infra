@@ -1,5 +1,4 @@
 owner: SquadcastHub
 git-repo: helm-infra
 pages-branch: master
-git-base-url: https://api.github.com/
-git-upload-url: https://uploads.github.com/
+charts-dir: squadcast-helm
