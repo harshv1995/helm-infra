@@ -3,7 +3,8 @@ git-repo: helm-infra
 # pages-branch: master
 charts-dir: squadcast-helm
 sign: false
-token: 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
-# index-path: /Users/muazam/Desktop/SquadcastHub/helm-infra
+index-path: /Users/muazam/Desktop/SquadcastHub/helm-infra
 charts_repo_url: https://squadcasthub.github.io/helm-infra
-# version: 0.1.0
+version: 0.1.1
+git-base-url: https://api.github.com/
+git-upload-url: https://uploads.github.com/
