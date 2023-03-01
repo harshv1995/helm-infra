@@ -30,7 +30,6 @@ jobs:
         with:
           charts_dir: squadcast-helm
           config: cr.yaml
-          charts_repo_url: https://squadcasthub.github.io/helm-infra
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           CR_SKIP_EXISTING: true

@@ -5,3 +5,5 @@ charts-dir: squadcast-helm
 sign: false
 token: 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
 # index-path: /Users/muazam/Desktop/SquadcastHub/helm-infra
+charts_repo_url: https://squadcasthub.github.io/helm-infra
+# version: 0.1.0
