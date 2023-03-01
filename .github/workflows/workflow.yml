@@ -31,3 +31,4 @@ jobs:
           charts_dir: squadcast-helm
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          CR_SKIP_EXISTING: true
