@@ -3,16 +3,6 @@ entries:
   squadcast-helm:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-03-01T10:38:12.466004+05:30"
-    description: A Helm chart for Kubernetes
-    digest: 6c3aa3d87caec8b38f85927f4b1f2cfde7acfc25f0409939350edb52f138d628
-    name: squadcast-helm
-    type: application
-    urls:
-    - https://github.com/SquadcastHub/helm-infra/releases/download/squadcast-helm-0.1.0/squadcast-helm-0.0.1.tgz
-    version: 0.1.0
-  - apiVersion: v2
-    appVersion: 1.16.0
     created: "2023-03-01T12:01:09.755511+05:30"
     description: A Helm chart for Kubernetes
     digest: 6c3aa3d87caec8b38f85927f4b1f2cfde7acfc25f0409939350edb52f138d628
@@ -20,7 +10,7 @@ entries:
     type: application
     urls:
     - https://github.com/SquadcastHub/helm-infra/releases/download/squadcast-helm-0.1.0/squadcast-helm-0.0.1.tgz
-    version: 0.1.0
+    version: 0.0.1
   - apiVersion: v2
     appVersion: 1.17.0
     created: "2023-03-01T12:26:31.210621+05:30"
