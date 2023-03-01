@@ -5,6 +5,5 @@ charts-dir: squadcast-helm
 sign: false
 index-path: /Users/muazam/Desktop/SquadcastHub/helm-infra
 charts_repo_url: https://squadcasthub.github.io/helm-infra
-version: 0.1.1
 git-base-url: https://api.github.com/
 git-upload-url: https://uploads.github.com/
