@@ -1,6 +1,6 @@
 owner: SquadcastHub
 git-repo: helm-infra
-# pages-branch: master
+pages-branch: master
 charts-dir: squadcast-helm
 sign: false
 charts_repo_url: https://squadcasthub.github.io/helm-infra
