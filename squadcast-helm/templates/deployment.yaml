@@ -5,6 +5,8 @@ metadata:
   labels:
     {{- include "squadcast-helm.labels" . | nindent 4 }}
   # namespace: {{ .Values.namespace }}
+  annotations:
+    {{- include "squadcast-helm.annotations" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
