@@ -4,5 +4,5 @@ git-repo: helm-infra
 charts-dir: squadcast-helm
 sign: false
 charts_repo_url: https://squadcasthub.github.io/helm-infra
-# use current directory as index-path
 index-path: .
+version: 0.1.1
