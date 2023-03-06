@@ -5,7 +5,8 @@ metadata:
   name: {{ include "squadcast-helm.fullname" . }}
   labels:
     {{- include "squadcast-helm.labels" . | nindent 4 }}
-  namespace: {{ .Values.namespace | default "default" | quote }}
+  # namespace: {{ .Values.namespace }}
+
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
