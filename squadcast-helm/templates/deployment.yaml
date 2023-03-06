@@ -4,13 +4,16 @@ metadata:
   name: {{ include "squadcast-helm.fullname" . }}
   labels:
     {{- include "squadcast-helm.labels" . | nindent 4 }}
+  # namespace: {{ .Values.namespace }}
+  annotations:
+    {{- include "squadcast-helm.annotations" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "squadcast-helm.selectorLabels" . | nindent 6 }} 
+      {{- include "squadcast-helm.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -20,15 +23,15 @@ spec:
       labels:
         {{- include "squadcast-helm.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      # {{- with .Values.imagePullSecrets }}
+      # imagePullSecrets:
+      #   {{- toYaml . | nindent 8 }}
+      # {{- end }}
       serviceAccountName: {{ include "squadcast-helm.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ .Values.fullnameOverride }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -38,7 +41,7 @@ spec:
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
-              protocol: TC
+              protocol: TCP
           {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
@@ -66,10 +69,6 @@ spec:
             name: config-volume
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-      {{- if .Values.initContainers.enabled }}
-
-      {{- end -}}
-      {{- if .Values.initContainers.enabled}}
       initContainers:
         - name: aws-secret-fetcher
           image: amazon/aws-cli
@@ -82,7 +81,10 @@ spec:
             aws configure set aws_secret_access_key $AWS_SECRET_KEY
             aws configure set default.region us-east-1
             mkdir -p /config/
-            aws secretsmanager get-secret-value --secret-id $AWS_SECRET_MANAGER_ID --query SecretString --output text > /config/config.json
+            aws secretsmanager get-secret-value --secret-id common-secrets-staging --query SecretString --output text > /config/common-secrets.json
+            aws secretsmanager get-secret-value --secret-id common-config-staging --query SecretString --output text > /config/common-config.json
+            aws secretsmanager get-secret-value --secret-id $AWS_SECRET_MANAGER_ID --query SecretString --output text > /config/app-secret.json
+            echo $CONFIG > /config/app-config.json
           env:
             {{- toYaml .Values.env | nindent 12 }}
           resources: {}

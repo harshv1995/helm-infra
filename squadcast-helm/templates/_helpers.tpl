@@ -46,8 +46,15 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "squadcast-helm.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "squadcast-helm.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+run: {{ .Release.Name }}
+{{- end }}
+
+{{/*
+Annotations
+*/}}
+{{- define "squadcast-helm.annotations" -}}
+meta.helm.sh/release-name: {{ .Release.Name }}
+meta.helm.sh/release-namespace: {{ .Release.Namespace }}
 {{- end }}
 
 {{/*
@@ -60,3 +67,4 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
