@@ -4,7 +4,7 @@ metadata:
   name: {{ include "squadcast-helm.fullname" . }}
   labels:
     {{- include "squadcast-helm.labels" . | nindent 4 }}
-  # namespace: {{ .Values.namespace }}
+  namespace: {{ .Values.namespace }}
   annotations:
     {{- include "squadcast-helm.annotations" . | nindent 4 }}
 spec:
