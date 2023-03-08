@@ -38,6 +38,10 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             {{- toYaml .Values.env | nindent 12 }}
+          {{- if .Values.overrideContainerStartCommand.enabled }}
+          command: {{ .Values.overrideContainerStartCommand.command }}
+          args: {{ .Values.overrideContainerStartCommand.args}}
+          {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
