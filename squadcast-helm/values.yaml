@@ -14,10 +14,12 @@ image:
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
-containerNameOverride: ""
 
 overrideContainerStartCommand:
   enabled: false
+  containerName: ""
+  command: []
+  args: []
 
 serviceAccount:
   # Specifies whether a service account should be created

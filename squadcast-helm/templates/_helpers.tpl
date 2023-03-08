@@ -24,8 +24,8 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{- define "squadcast-helm.containerName" -}}
-{{- if .Values.containerNameOverride }}
-{{- .Values.containerNameOverride | trunc 63 | trimSuffix "-" }}
+{{- if .Values.overrideContainerStartCommand.enabled }}
+{{- .Values.overrideContainerStartCommand.containerName | trunc 63 | trimSuffix "-" }}
 {{- else }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
