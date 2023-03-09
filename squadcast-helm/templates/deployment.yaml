@@ -88,7 +88,11 @@ spec:
             mkdir -p /config/
             aws secretsmanager get-secret-value --secret-id common-secrets-$AWS_SECRET_MANAGER_ENV --query SecretString --output text > /config/common-secrets.json
             aws secretsmanager get-secret-value --secret-id common-config-$AWS_SECRET_MANAGER_ENV --query SecretString --output text > /config/common-config.json
-            aws secretsmanager get-secret-value --secret-id $AWS_SECRET_MANAGER_ID-$AWS_SECRET_MANAGER_ENV --query SecretString --output text > /config/app-secret.json
+            if [ -n "$AWS_SECRET_MANAGER_ID" ]; then
+              aws secretsmanager get-secret-value --secret-id $AWS_SECRET_MANAGER_ID-$AWS_SECRET_MANAGER_ENV --query SecretString --output text > /config/app-secret.json
+            else
+              echo "No AWS_SECRET_MANAGER_ID provided, skipping fetching app-secret.json"
+            fi
             echo $CONFIG > /config/app-config.json
           env:
             {{- toYaml .Values.env | nindent 12 }}
