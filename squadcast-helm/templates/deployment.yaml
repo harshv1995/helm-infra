@@ -43,14 +43,14 @@ spec:
           args: {{ .Values.overrideContainerStartCommand.args}}
           {{- end }}
           ports:
-            - name: http
+            - name: web
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
               path: /livez
-              port: http
+              port: web
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
@@ -61,7 +61,7 @@ spec:
           readinessProbe:
             httpGet:
               path: /readyz
-              port: http
+              port: web
             initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
