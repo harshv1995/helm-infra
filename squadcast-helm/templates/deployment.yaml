@@ -40,7 +40,10 @@ spec:
             {{- toYaml .Values.env | nindent 12 }}
           {{- if .Values.overrideContainerStartCommand.enabled }}
           command: {{ .Values.overrideContainerStartCommand.command }}
-          args: {{ .Values.overrideContainerStartCommand.args}}
+          args:
+            {{- range .Values.overrideContainerStartCommand.args }}
+            - {{ . }}
+            {{- end }}
           {{- end }}
           ports:
             - name: web
