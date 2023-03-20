@@ -1,10 +1,9 @@
-name: Release Charts
+name: Squadcast Helm Chart Release
 
 on:
   push:
     branches:
       - master
-      - gh-pages
 
 jobs:
   release:
