@@ -26,6 +26,7 @@ spec:
       serviceAccountName: {{ include "squadcast-helm.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      restartPolicy: {{ .Values.restartPolicy | default "Always" }}      
       containers:
         - name: {{ include "squadcast-helm.containerName" . }}
           securityContext:
