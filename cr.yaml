@@ -5,4 +5,4 @@ charts-dir: squadcast-helm
 sign: false
 charts_repo_url: https://squadcasthub.github.io/helm-infra
 index-path: .
-version: 0.1.12
+version: 0.2.0
