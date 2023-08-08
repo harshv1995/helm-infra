@@ -85,8 +85,9 @@ spec:
             aws configure set aws_secret_access_key $AWS_SECRET_KEY
             aws configure set default.region us-east-1
             mkdir -p /config/
-            aws secretsmanager get-secret-value --secret-id common-secrets-$AWS_SECRET_MANAGER_ENV --query SecretString --output text > /config/common-secrets.json
-            aws secretsmanager get-secret-value --secret-id common-config-$AWS_SECRET_MANAGER_ENV --query SecretString --output text > /config/common-config.json
+            # Added 1- in the start of the file name to make sure it is the first file to be read, so that app-secret/app-config can take precedence over common-secrets/common-config.
+            aws secretsmanager get-secret-value --secret-id common-secrets-$AWS_SECRET_MANAGER_ENV --query SecretString --output text > /config/1-common-secrets.json
+            aws secretsmanager get-secret-value --secret-id common-config-$AWS_SECRET_MANAGER_ENV --query SecretString --output text > /config/1-common-config.json
             if [ -n "$AWS_SECRET_MANAGER_ID" ]; then
               aws secretsmanager get-secret-value --secret-id $AWS_SECRET_MANAGER_ID-$AWS_SECRET_MANAGER_ENV --query SecretString --output text > /config/app-secret.json
             else
