@@ -92,3 +92,7 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# migration_job:
+#   command: [ "/bin/sh" ]
+#   args: [ "-c", "/app/batman search-worker /config/*.json" ]
