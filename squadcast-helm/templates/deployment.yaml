@@ -45,16 +45,6 @@ spec:
             - name: web
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-            {{- if .Values.service.additionalPorts }}
-            {{- range $servicePort := .Values.service.additionalPorts }}
-                - name: {{ $servicePort.name }}
-                  containerPort: {{ $servicePort.targetPort }}
-                  {{- if $servicePort.protocol }}
-                  protocol: {{ $servicePort.protocol }} 
-                  {{- end }}
-            {{- end }}
-            {{- end }}
-
           {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
