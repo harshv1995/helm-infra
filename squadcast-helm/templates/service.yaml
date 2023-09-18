@@ -14,5 +14,16 @@ spec:
       targetPort: {{ .Values.service.port }}
       protocol: TCP
       name: web
+    {{- if .Values.service.additionalPorts }}
+    {{- range $servicePort := .Values.service.additionalPorts }}
+    - name: {{ $servicePort.name }}
+      port: {{ $servicePort.port }} 
+      {{- if $servicePort.protocol }}
+      protocol: {{ $servicePort.protocol | default "TCP" }} 
+      {{- end }}
+      targetPort: {{ $servicePort.targetPort }}
+    {{- end }}
+    {{- end }}
   selector:
     {{- include "squadcast-helm.selectorLabels" . | nindent 4 }}
+
