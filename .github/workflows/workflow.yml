@@ -93,4 +93,4 @@ jobs:
         run: |
           git add index.yaml && \
           git commit -m "Actions: Release index.yaml ${{ steps.check_chart_version.outputs.tag }}" && \
-          git push origin main
+          git push origin master
