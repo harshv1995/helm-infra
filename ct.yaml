@@ -3,5 +3,5 @@ target-branch: master
 chart-dirs:
   - squadcast-helm
 chart-repos:
-  - squadcast-helm=https://squadcasthub.github.io/helm-infra
+  - squadcast-helm=https://harshv1995.github.io/helm-infra
 helm-extra-args: --timeout 600s
