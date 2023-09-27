@@ -1,34 +1,96 @@
-name: Squadcast Helm Chart Release
+name: Release Charts
 
 on:
   push:
+    paths:
+      - 'squadcast-helm/**'
+      - 'cr.yaml'
     branches:
       - master
 
+
 jobs:
   release:
+    # depending on default permission settings for your org (contents being read-only or read-write for workloads), you will have to add permissions
+    # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
     permissions:
       contents: write
     runs-on: ubuntu-latest
+    env:
+      CHART_DIR: squadcast-helm
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
+      - name: Get Chart Version
+        id: chart_version
+        run: |
+          echo "chart_version=$(yq eval '.version' $CHART_DIR/Chart.yaml)" >> $GITHUB_OUTPUT
+          echo "cr_version=$(yq eval '.version' cr.yaml)" >> $GITHUB_OUTPUT
+          echo "chart_dir=$(yq eval '.charts-dir' cr.yaml)" >> $GITHUB_OUTPUT
+
+      - name: check if chart and cr version are same
+        id: check_chart_version
+        run: |
+          if [ "${{ steps.chart_version.outputs.chart_version }}" != "${{ steps.chart_version.outputs.cr_version }}" ]; then
+            echo "Chart version and cr version are not same"
+            exit 1
+          else 
+            echo "Chart version and cr version are same"
+            echo "tag=${{ steps.chart_version.outputs.chart_dir }}-${{ steps.chart_version.outputs.chart_version }}" >> $GITHUB_OUTPUT
+          fi 
+      
+      - name: check if git tag exists
+        id: check_tag
+        run: |
+          if git rev-parse ${{ steps.check_chart_version.outputs.tag }} >/dev/null 2>&1; then
+            echo "Tag already exists"
+            exit 1
+          else 
+            echo "Tag does not exist"
+          fi
+          
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Install Helm
-        uses: azure/setup-helm@v3
+      - name: Install chart releaser
+        run: |
+          curl -L -o /tmp/cr.tgz https://github.com/helm/chart-releaser/releases/download/v1.6.0/chart-releaser_1.6.0_linux_amd64.tar.gz
+          tar -xv -C /tmp -f /tmp/cr.tgz
+          mv /tmp/cr /usr/local/bin/cr
 
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.5.0
-        with:
-          charts_dir: squadcast-helm
-          config: cr.yaml
+      - name: Package chart using chart releaser
+        run: |
+          rm -rf .cr-release-packages
+          cr package $CHART_DIR --config cr.yaml
+      
+      - name: git create tag
+        run: |
+          git add .cr-release-packages && \
+          git commit -m "Actions: Release ${{ steps.check_chart_version.outputs.tag }}" && \
+          git tag ${{ steps.check_chart_version.outputs.tag }} && \
+          git push origin ${{ steps.check_chart_version.outputs.tag }}
+
+      - name: chart upload
         env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          CR_SKIP_EXISTING: true
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        run: |
+          ls -lart .cr-release-packages
+          cat cr.yaml
+          cr upload  --token $GITHUB_TOKEN --config cr.yaml
+      
+      - name: update index.yaml
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        run: |
+          cr index --token $GITHUB_TOKEN --config cr.yaml
+      
+      - name: git push index.yaml
+        run: |
+          git add index.yaml && \
+          git commit -m "Actions: Release index.yaml ${{ steps.check_chart_version.outputs.tag }}" && \
+          git push origin main
