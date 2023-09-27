@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "squadcast-helm.fullname" . }}
   labels:
+    app: helm-automation
     {{- include "squadcast-helm.labels" . | nindent 4 }}
   namespace: {{ .Values.namespace }}
   annotations:
